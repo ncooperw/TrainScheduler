@@ -6,39 +6,39 @@ var config = {
     projectId: "trainscheduler-b2a3a",
     storageBucket: "",
     messagingSenderId: "202231604169"
-  };
+};
 
-  firebase.initializeApp(config);
+firebase.initializeApp(config);
 
-  var database = firebase.database();
+var database = firebase.database();
 
-  //capture click
-  $("#addTrain").on("click", function(event){
-      event.preventDefault();
+//capture click
+$("#addTrain").on("click", function (event) {
+    event.preventDefault();
     console.log("Clicked");
-      //grab input values
-      var trainName = $("#name-input").val().trim();
-      var destination = $("#destination-input").val().trim();
-     var firstTrain = $("#first-train").val().trim();
-     var freq = $("#frequency").val().trim();
+    //grab input values
+    var trainName = $("#name-input").val().trim();
+    var destination = $("#destination-input").val().trim();
+    var firstTrain = $("#first-train").val().trim();
+    var freq = $("#frequency").val().trim();
 
-     //pushing data to firebase
+    //pushing data to firebase
 
-     database.ref().push({
-         trainName: trainName,
-         destination: destination,
-         firstTrain: firstTrain,
-         frequency: freq
-     });
+    database.ref().push({
+        trainName: trainName,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: freq
+    });
 
-     console.log(trainName);
-     console.log(destination);
-     console.log(firstTrain);
-     console.log(freq);
+    console.log(trainName);
+    console.log(destination);
+    console.log(firstTrain);
+    console.log(freq);
 
-  });
+});
 //Firebase setup
-database.ref().on("child_added", function(childSnapshot){
+database.ref().on("child_added", function (childSnapshot) {
     var newTrain = childSnapshot.val().trainName;
     var newLocation = childSnapshot.val().destination;
     var newFirstTrain = childSnapshot.val().firstTrain;
@@ -54,26 +54,26 @@ database.ref().on("child_added", function(childSnapshot){
     var diffTime = moment().diff(moment(startTimeConverted), "minutes");
 
     //time apart (remainder)
-var tRemainder = diffTime % newFreq;
+    var tRemainder = diffTime % newFreq;
 
-//minutes until train
-var tMinutesTillTrain = newFreq - tRemainder;
+    //minutes until train
+    var tMinutesTillTrain = newFreq - tRemainder;
 
-//next train
-var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-var catchTrain = moment(nextTrain).format("HH:mm");
+    //next train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    var catchTrain = moment(nextTrain).format("HH:mm");
 
-//display
-$(".trainList").append(
-    '<tr><td>' + newTrain +
-    '</td><td>' + newLocation +
-    '</td><td>' + newFreq +
-    '</td><td>' + catchTrain +
-    '</td><td>' + tMinutesTillTrain + '</td></tr>'
-);
-//Clear input fields
-$("#name-input, #destination-input, #first-train, #frequency")
-return false;
+    //display
+    $(".trainList").append(
+        '<tr><td>' + newTrain +
+        '</td><td>' + newLocation +
+        '</td><td>' + newFreq +
+        '</td><td>' + catchTrain +
+        '</td><td>' + tMinutesTillTrain + '</td></tr>'
+    );
+    //Clear input fields
+    $("#name-input, #destination-input, #first-train, #frequency")
+    return false;
 })
 
 
@@ -82,5 +82,3 @@ return false;
 // function(errorObject){
 //     console.warn("Errors handled: "+ errorObject.code);
 // };
-
-  

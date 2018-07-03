@@ -1,0 +1,25 @@
+body {
+    height: 100%;
+    background-image: url("../images/paint_splatter_background_by_bella_beauty-d4ajtiq.jpg");
+}
+
+h1, h2 {
+    font-family: 'Spirax', cursive !important;
+    font-weight: bold;
+}
+
+.bg {
+    background-image: url("../images/neon_train.jpg")
+}
+
+#addTrain {
+    background-color: #d30e8f;
+}
+
+.footer {
+    /* position: absolute; */
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
